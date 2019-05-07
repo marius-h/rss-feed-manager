@@ -15,19 +15,9 @@ import javax.xml.stream.events.XMLEvent;
 
 import de.einfachpunkt.backend.models.FeedItem;
 import de.einfachpunkt.backend.models.FeedChannel;
+import de.einfachpunkt.backend.models.Rss;
 
 public class RSSFeedParser {
-
-    private static final String TITLE = "title";
-    private static final String DESCRIPTION = "description";
-    private static final String CHANNEL = "channel";
-    private static final String LANGUAGE = "language";
-    private static final String LINK = "link";
-    private static final String LAST_BUILD_DATE = "lastBuildDate";
-    private static final String ITEM = "item";
-    private static final String PUB_DATE = "pubDate";
-    private static final String GUID = "guid";
-    private static final String IMAGE = "enclosure";
 
     private final URL url;
 
@@ -63,42 +53,43 @@ public class RSSFeedParser {
                 XMLEvent event = eventReader.nextEvent();
                 if (event.isStartElement()) {
                     String localPart = event.asStartElement().getName().getLocalPart();
+                    image = "";
                     switch (localPart) {
-                        case ITEM:
+                        case Rss.ITEM:
                             if (isFeedHeader) {
                                 isFeedHeader = false;
                                 feed = new FeedChannel(title, link, description, language, pubDate, lastBuildDate);
                             }
                             event = eventReader.nextEvent();
                             break;
-                        case IMAGE:
+                        case Rss.IMAGE:
                             StartElement var = event.asStartElement();
                             image = var.getAttributeByName(new QName("url")).getValue();
                             break;
-                        case TITLE:
+                        case Rss.TITLE:
                             title = getCharacterData(event, eventReader);
                             break;
-                        case DESCRIPTION:
+                        case Rss.DESCRIPTION:
                             description = getCharacterData(event, eventReader);
                             break;
-                        case LINK:
+                        case Rss.LINK:
                             link = getCharacterData(event, eventReader);
                             break;
-                        case GUID:
+                        case Rss.GUID:
                             guid = getCharacterData(event, eventReader);
                             break;
-                        case LANGUAGE:
+                        case Rss.LANGUAGE:
                             language = getCharacterData(event, eventReader);
                             break;
-                        case LAST_BUILD_DATE:
+                        case Rss.LAST_BUILD_DATE:
                             lastBuildDate = getCharacterData(event, eventReader);
                             break;
-                        case PUB_DATE:
+                        case Rss.PUB_DATE:
                             pubDate = getCharacterData(event, eventReader);
                             break;
                     }
                 } else if (event.isEndElement()) {
-                    if (event.asEndElement().getName().getLocalPart().equals(ITEM)) {
+                    if (event.asEndElement().getName().getLocalPart().equals(Rss.ITEM)) {
                         FeedItem news = new FeedItem();
                         news.setDescription(description);
                         news.setLink(link);

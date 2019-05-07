@@ -2,6 +2,7 @@ package de.einfachpunkt.backend.parser;
 
 import de.einfachpunkt.backend.models.FeedChannel;
 import de.einfachpunkt.backend.models.FeedItem;
+import de.einfachpunkt.backend.models.Rss;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
@@ -21,7 +22,6 @@ public class RSSFeedWriter {
     }
 
     public void write() throws Exception {
-
         // create a XMLOutputFactory
         XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
 
@@ -43,33 +43,33 @@ public class RSSFeedWriter {
         eventWriter.add(rssStart);
         eventWriter.add(eventFactory.createAttribute("version", "2.0"));
         eventWriter.add(end);
-        eventWriter.add(eventFactory.createStartElement("", "", "channel"));
+        eventWriter.add(eventFactory.createStartElement("", "", Rss.CHANNEL));
         eventWriter.add(end);
 
         // Write the different nodes
-        createNode(eventWriter, "title", rssfeed.getTitle());
-        createNode(eventWriter, "link", rssfeed.getLink());
-        createNode(eventWriter, "description", rssfeed.getDescription());
-        createNode(eventWriter, "language", rssfeed.getLanguage());
-        // createNode(eventWriter, "copyright", rssfeed.getCopyright());
-        createNode(eventWriter, "pubdate", rssfeed.getPubDate());
+        createNode(eventWriter, Rss.TITLE, rssfeed.getTitle());
+        createNode(eventWriter, Rss.LINK, rssfeed.getLink());
+        createNode(eventWriter, Rss.DESCRIPTION, rssfeed.getDescription());
+        createNode(eventWriter, Rss.LANGUAGE, rssfeed.getLanguage());
+        // createNode(eventWriter, Rss.COPYRIGHT, rssfeed.getCopyright());
+        createNode(eventWriter, Rss.PUB_DATE, rssfeed.getPubDate());
 
         for (FeedItem entry : rssfeed.getNews()) {
-            eventWriter.add(eventFactory.createStartElement("", "", "item"));
+            eventWriter.add(eventFactory.createStartElement("", "", Rss.ITEM));
             eventWriter.add(end);
-            createNode(eventWriter, "title", entry.getTitle());
-            createNode(eventWriter, "description", entry.getDescription());
-            createNode(eventWriter, "link", entry.getLink());
-            createNode(eventWriter, "author", entry.getAuthor());
-            createNode(eventWriter, "guid", entry.getGuid());
-            createNode(eventWriter, "enclosure", entry.getImage());
+            createNode(eventWriter, Rss.TITLE, entry.getTitle());
+            createNode(eventWriter, Rss.DESCRIPTION, entry.getDescription());
+            createNode(eventWriter, Rss.LINK, entry.getLink());
+            createNode(eventWriter, Rss.AUTHOR, entry.getAuthor());
+            createNode(eventWriter, Rss.GUID, entry.getGuid());
+            createNode(eventWriter, Rss.IMAGE, entry.getImage());
             eventWriter.add(end);
-            eventWriter.add(eventFactory.createEndElement("", "", "item"));
+            eventWriter.add(eventFactory.createEndElement("", "", Rss.ITEM));
             eventWriter.add(end);
         }
 
         eventWriter.add(end);
-        eventWriter.add(eventFactory.createEndElement("", "", "channel"));
+        eventWriter.add(eventFactory.createEndElement("", "", Rss.CHANNEL));
         eventWriter.add(end);
         eventWriter.add(eventFactory.createEndElement("", "", "rss"));
         eventWriter.add(end);
@@ -78,9 +78,7 @@ public class RSSFeedWriter {
         eventWriter.close();
     }
 
-    private void createNode(XMLEventWriter eventWriter, String name,
-
-    String value) throws XMLStreamException {
+    private void createNode(XMLEventWriter eventWriter, String name, String value) throws XMLStreamException {
         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
         XMLEvent end = eventFactory.createDTD("\n");
         XMLEvent tab = eventFactory.createDTD("\t");

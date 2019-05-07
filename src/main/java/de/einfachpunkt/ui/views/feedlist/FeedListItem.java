@@ -1,6 +1,5 @@
 package de.einfachpunkt.ui.views.feedlist;
 
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -9,7 +8,6 @@ import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.Page;
 import de.einfachpunkt.backend.models.FeedItem;
 
 public class FeedListItem extends VerticalLayout {
@@ -27,7 +25,8 @@ public class FeedListItem extends VerticalLayout {
         VerticalLayout textContainer = new VerticalLayout();
         textContainer.setPadding(false);
         detailContainer.add(textContainer);
-        if (feedItem.getImage() != null) {
+        String imgSrc = feedItem.getImage();
+        if (!imgSrc.isEmpty()) {
             Image image = new Image(feedItem.getImage(), "Bild");
             image.setHeight("100px");
             image.setWidth("100px");
