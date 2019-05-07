@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class FeedItem implements Serializable {
 
     private String title;
+    private String author;
 
     @Override
     public String toString() {
@@ -70,5 +71,13 @@ public class FeedItem implements Serializable {
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

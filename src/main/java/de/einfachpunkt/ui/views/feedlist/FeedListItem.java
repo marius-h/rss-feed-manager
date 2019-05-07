@@ -1,12 +1,15 @@
 package de.einfachpunkt.ui.views.feedlist;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.page.Page;
 import de.einfachpunkt.backend.models.FeedItem;
 
 public class FeedListItem extends VerticalLayout {
@@ -16,8 +19,6 @@ public class FeedListItem extends VerticalLayout {
     public FeedListItem(FeedItem feedItem) {
         this.feedItem = feedItem;
 
-        //System.out.println(feedItem.toString());
-
         addContent();
     }
 
@@ -26,9 +27,8 @@ public class FeedListItem extends VerticalLayout {
         VerticalLayout textContainer = new VerticalLayout();
         textContainer.setPadding(false);
         detailContainer.add(textContainer);
-        System.out.println(feedItem.getImage());
         if (feedItem.getImage() != null) {
-            Image image = new Image(feedItem.getImage(), "test");
+            Image image = new Image(feedItem.getImage(), "Bild");
             image.setHeight("100px");
             image.setWidth("100px");
             image.addClassName("item_img");
@@ -40,6 +40,8 @@ public class FeedListItem extends VerticalLayout {
 
         Button actionBtn = new Button("Weiterlesen".toUpperCase());
         actionBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        actionBtn.addClickListener(event -> UI.getCurrent().getPage()
+                .executeJavaScript("window.open(\"" + feedItem.getLink() + "\", \"_self\");"));
 
         add(detailContainer, actionBtn);
         addClassName("item_card");
