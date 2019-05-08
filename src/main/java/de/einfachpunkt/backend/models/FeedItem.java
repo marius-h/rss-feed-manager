@@ -1,11 +1,20 @@
 package de.einfachpunkt.backend.models;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class FeedItem implements Serializable {
 
     private String title;
     private String author;
+    private String link;
+    private String description;
+    private String pubDate;
+    private String guid;
+    private String image;
 
     @Override
     public String toString() {
@@ -18,12 +27,6 @@ public class FeedItem implements Serializable {
                 ", image='" + image + '\'' +
                 '}';
     }
-
-    private String link;
-    private String description;
-    private String pubDate;
-    private String guid;
-    private String image;
 
     public String getImage() {
         return image;
@@ -79,5 +82,42 @@ public class FeedItem implements Serializable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getTimeAgo() throws ParseException {
+        Date d = new SimpleDateFormat("E, d MMMM yyyy HH:mm:ss Z", Locale.ENGLISH).parse(pubDate);
+        Date now = new Date();
+        int seconds = Math.round(Math.abs((now.getTime() - d.getTime()) / 1000));
+        int minutes = Math.round(Math.abs(seconds / 60));
+        int hours = Math.round(Math.abs(minutes / 60));
+        int days = Math.round(Math.abs(hours / 24));
+        long months = Math.round(Math.abs(days / 30.416));
+        int years = Math.round(Math.abs(days / 365));
+
+        if (Double.isNaN(seconds)) {
+            return "";
+        } else if (seconds <= 45) {
+            return "Vor einigen Sekunden";
+        } else if (seconds <= 90) {
+            return "Vor einer Minute";
+        } else if (minutes <= 45) {
+            return "Vor " + minutes + " Minuten";
+        } else if (minutes <= 90) {
+            return "Vor einer Stunde";
+        } else if (hours <= 22) {
+            return "Vor " + hours + " Stunden";
+        } else if (hours <= 36) {
+            return "Vor einem Tag";
+        } else if (days <= 25) {
+            return "Vor " + days + " Tagen";
+        } else if (days <= 45) {
+            return "Vor einem Monat";
+        } else if (days <= 345) {
+            return "Vor " + months + " Monaten";
+        } else if (days <= 545) {
+            return "Vor einem Jahr";
+        } else { // (days > 545)
+            return "Vor " + years + " Jahren";
+        }
     }
 }

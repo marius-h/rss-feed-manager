@@ -22,8 +22,10 @@ public class FeedEdit extends VerticalLayout {
     private void showLogin() {
         LoginOverlay login = new LoginOverlay();
         login.addLoginListener(e -> {
-            if (e.getPassword().equals(USERNAME) && e.getUsername().equals(PASSWORD)) {
+            if (e.getUsername().equals(USERNAME) && e.getPassword().equals(PASSWORD)) {
                 login.close();
+            } else {
+                login.setError(true);
             }
         });
         login.setOpened(true);

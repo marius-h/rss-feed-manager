@@ -1,7 +1,6 @@
 package de.einfachpunkt.backend.parser;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -19,7 +18,8 @@ import de.einfachpunkt.backend.models.Rss;
 
 public class RSSFeedParser {
 
-    private final URL url;
+    private URL url;
+    private File file;
 
     public RSSFeedParser(String feedUrl) {
         try {
@@ -27,6 +27,10 @@ public class RSSFeedParser {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public RSSFeedParser(File file) {
+        this.file = file;
     }
 
     public FeedChannel readFeed() {
@@ -90,14 +94,14 @@ public class RSSFeedParser {
                     }
                 } else if (event.isEndElement()) {
                     if (event.asEndElement().getName().getLocalPart().equals(Rss.ITEM)) {
-                        FeedItem news = new FeedItem();
-                        news.setDescription(description);
-                        news.setLink(link);
-                        news.setTitle(title);
-                        news.setPubDate(pubDate);
-                        news.setGuid(guid);
-                        news.setImage(image);
-                        feed.getNews().add(news);
+                        FeedItem item = new FeedItem();
+                        item.setDescription(description);
+                        item.setLink(link);
+                        item.setTitle(title);
+                        item.setPubDate(pubDate);
+                        item.setGuid(guid);
+                        item.setImage(image);
+                        feed.getItems().add(item);
                         event = eventReader.nextEvent();
                     }
                 }
@@ -119,10 +123,18 @@ public class RSSFeedParser {
     }
 
     private InputStream read() {
-        try {
-            return url.openStream();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (file == null) {
+            try {
+                return url.openStream();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                return new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

@@ -3,6 +3,11 @@ package de.einfachpunkt.backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The channel of an RSS feed
+ *
+ * @author Marius Höfler
+ */
 public class FeedChannel {
 
     private String title;
@@ -11,7 +16,7 @@ public class FeedChannel {
     private String language;
     private String pubDate;
     private String lastBuildDate;
-    private List<FeedItem> news = new ArrayList<>();
+    private List<FeedItem> items = new ArrayList<>();
 
     public FeedChannel(String title, String link, String description, String language, String pubDate, String lastBuildDate) {
         this.title = title;
@@ -70,11 +75,13 @@ public class FeedChannel {
         this.lastBuildDate = lastBuildDate;
     }
 
-    public List<FeedItem> getNews() {
-        return news;
+    public List<FeedItem> getItems() {
+        return items;
     }
 
-    public void setNews(List<FeedItem> news) {
-        this.news = news;
+    public void setItems(List<FeedItem> items) {
+        this.items = items;
     }
+
+
 }
