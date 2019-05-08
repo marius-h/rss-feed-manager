@@ -1,18 +1,3 @@
-/*
- * Copyright 2000-2017 Vaadin Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
 package de.einfachpunkt.ui;
 
 import com.vaadin.flow.component.Text;
@@ -22,11 +7,13 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.page.Viewport;
+import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.PageConfigurator;
+import de.einfachpunkt.ui.views.feededit.FeedEdit;
 import de.einfachpunkt.ui.views.feedlist.FeedList;
 
 /**
@@ -36,17 +23,16 @@ import de.einfachpunkt.ui.views.feedlist.FeedList;
 @HtmlImport("frontend://styles/shared-styles.html")
 @PWA(name = "RSS Feed Manager", shortName = "RSSManager")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
-public class MainLayout extends Div
-        implements RouterLayout, PageConfigurator {
+public class MainLayout extends Div implements RouterLayout, PageConfigurator {
 
     public MainLayout() {
-        H2 title = new H2("Nachrichten");
+        H2 title = new H2("RSS Feed");
         title.addClassName("main-layout__title");
 
-//        RouterLink reviews = new RouterLink(null, ReviewsList.class);
-//        reviews.add(new Icon(VaadinIcon.LIST), new Text("Reviews"));
-//        reviews.addClassName("main-layout__nav-item");
-//        reviews.setHighlightCondition(HighlightConditions.sameLocation());
+        RouterLink reviews = new RouterLink(null, FeedEdit.class);
+        reviews.add(new Icon(VaadinIcon.EDIT), new Text("Feed editieren"));
+        reviews.addClassName("main-layout__nav-item");
+        reviews.setHighlightCondition(HighlightConditions.sameLocation());
 
         RouterLink feed = new RouterLink(null, FeedList.class);
         feed.add(new Icon(VaadinIcon.NEWSPAPER), new Text("Mein Feed"));
