@@ -1,7 +1,7 @@
-<!--<link rel="import" href="../bower_components/vaadin-lumo-styles/color.html">-->
-<!--<link rel="import" href="../bower_components/vaadin-lumo-styles/typography.html">-->
-<link rel="import" href="bower_components/vaadin-material-styles/color.html">
-<link rel="import" href="bower_components/vaadin-material-styles/typography.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/color.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/typography.html">
+<link rel="import" href="../bower_components/vaadin-material-styles/color.html">
+<link rel="import" href="../bower_components/vaadin-material-styles/typography.html">
 <dom-module id="view-styles">
     <template>
         <style>
@@ -24,6 +24,7 @@
                 min-width: 0;
                 margin-right: 16px;
             }
+
             .view-container {
                 flex: auto;
             }
@@ -32,7 +33,7 @@
 </dom-module>
 
 <custom-style>
-    <style include="material-color-light material-typography view-styles">
+    <style include="lumo-color lumo-typography material-color-light material-typography view-styles">
         html {
             height: auto;
             --main-layout-header-height: 64px;
@@ -64,9 +65,14 @@
 
         .item_img {
             border-radius: 8px;
+            height: 100px;
+            width: 100px;
+            min-height: 100px;
+            min-width: 100px;
         }
 
         .time_style {
+            font-size: var(--material-small-font-size);
             margin-top: 0;
             font-style: italic;
             font-weight: normal;
@@ -90,6 +96,7 @@
             line-height: 1;
             letter-spacing: -0.02em;
             font-weight: 500;
+            color: #FFFFFF;
         }
 
         .main-layout > * {
@@ -107,8 +114,8 @@
             margin: 0 calc(-50vw + 50%);
             padding: 0 calc(50vw - 50% + 16px);
 
-            background-color: var(--lumo-base-color);
-            box-shadow: 0 1px 0 0 var(--lumo-contrast-5pct);
+            background-color: var(--material-primary-color);
+            box-shadow: var(--material-shadow-elevation-12dp);
         }
 
         .main-layout__nav {
@@ -119,9 +126,11 @@
 
         .main-layout__nav-item {
             display: inline-flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            padding: 4px 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            height: var(--main-layout-header-height);
             cursor: pointer;
             transition: 0.3s color, 0.3s transform;
             will-change: transform;
@@ -129,28 +138,32 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            text-decoration: none;
+            text-transform: uppercase;
             font-size: var(--lumo-font-size-s);
-            color: var(--lumo-secondary-text-color);
+            color: #dbdbdb;
             font-weight: 500;
             line-height: 1.3;
         }
 
         .main-layout__nav-item:hover {
-            text-decoration: none;
+            color: #FFFFFF;
         }
 
         .main-layout__nav-item:not([highlight]):hover {
-            color: inherit;
+            color: #FFFFFF;
         }
 
         .main-layout__nav-item[highlight] {
-            color: var(--lumo-primary-text-color);
+            color: #FFFFFF;
+            background-color: rgba(255, 255, 255, 0.1);
             cursor: default;
         }
 
         .main-layout__nav-item iron-icon {
             /* Vaadin icons are using a 16x16 grid */
             padding: 4px;
+            margin-right: 4px;
             box-sizing: border-box;
             pointer-events: none;
         }

@@ -63,6 +63,12 @@ public class RSSFeedParser {
                             if (isFeedHeader) {
                                 isFeedHeader = false;
                                 feed = new FeedChannel(title, link, description, language, pubDate, lastBuildDate);
+                                description = "";
+                                title = "";
+                                link = "";
+                                guid = "";
+                                pubDate = "";
+                                image = "";
                             }
                             event = eventReader.nextEvent();
                             break;
@@ -77,6 +83,7 @@ public class RSSFeedParser {
                             description = getCharacterData(event, eventReader);
                             break;
                         case Rss.LINK:
+                            System.out.println("Link: " + link);
                             link = getCharacterData(event, eventReader);
                             break;
                         case Rss.GUID:
@@ -102,6 +109,14 @@ public class RSSFeedParser {
                         item.setGuid(guid);
                         item.setImage(image);
                         feed.getItems().add(item);
+                        description = "";
+                        title = "";
+                        link = "";
+                        guid = "";
+                        language = "";
+                        pubDate = "";
+                        lastBuildDate = "";
+                        image = "";
                         event = eventReader.nextEvent();
                     }
                 }

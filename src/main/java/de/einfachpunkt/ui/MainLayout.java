@@ -32,15 +32,15 @@ public class MainLayout extends Div implements RouterLayout, PageConfigurator {
         H2 title = new H2("RSS Feed");
         title.addClassName("main-layout__title");
 
-        RouterLink editFeed = new RouterLink(null, FeedEdit.class);
-        editFeed.add(new Icon(VaadinIcon.EDIT), new Text("Feed editieren"));
-        editFeed.addClassName("main-layout__nav-item");
-        editFeed.setHighlightCondition(HighlightConditions.sameLocation());
-
         RouterLink feed = new RouterLink(null, FeedList.class);
         feed.add(new Icon(VaadinIcon.NEWSPAPER), new Text("Mein Feed"));
         feed.addClassName("main-layout__nav-item");
         feed.setHighlightCondition(HighlightConditions.sameLocation());
+
+        RouterLink editFeed = new RouterLink(null, FeedEdit.class);
+        editFeed.add(new Icon(VaadinIcon.EDIT), new Text("Feed editieren"));
+        editFeed.addClassName("main-layout__nav-item");
+        editFeed.setHighlightCondition(HighlightConditions.sameLocation());
 
         Div navigation = new Div(feed, editFeed);
         navigation.addClassName("main-layout__nav");

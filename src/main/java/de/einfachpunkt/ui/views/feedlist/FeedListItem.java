@@ -4,7 +4,11 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H5;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import de.einfachpunkt.backend.models.FeedItem;
@@ -17,20 +21,24 @@ import java.text.ParseException;
 public class FeedListItem extends VerticalLayout {
 
     private FeedItem feedItem;
+    private EditItemCallback editItemCallback;
+    private int position;
 
     public FeedListItem(FeedItem feedItem) {
         this.feedItem = feedItem;
-
         addContent();
     }
 
-    public FeedListItem(FeedItem feedItem, boolean isEditable) {
+    public FeedListItem(FeedItem feedItem, int position, EditItemCallback editItemCallback) {
         this.feedItem = feedItem;
+        this.position = position;
+        this.editItemCallback = editItemCallback;
         addContent();
     }
 
     private void addContent() {
         HorizontalLayout detailContainer = new HorizontalLayout();
+        detailContainer.setWidthFull();
         VerticalLayout textContainer = new VerticalLayout();
         textContainer.setPadding(false);
         detailContainer.add(textContainer);
@@ -55,15 +63,26 @@ public class FeedListItem extends VerticalLayout {
 
         add(detailContainer);
 
+        HorizontalLayout actions = new HorizontalLayout();
+
         if (feedItem.getLink() != null) {
             if (!feedItem.getLink().isEmpty()) {
                 Button actionBtn = new Button("Weiterlesen".toUpperCase());
                 actionBtn.addThemeVariants(ButtonVariant.MATERIAL_OUTLINED);
                 actionBtn.addClickListener(event -> UI.getCurrent().getPage()
                         .executeJavaScript("window.open(\"" + feedItem.getLink() + "\", \"_self\");"));
-                add(actionBtn);
+                actions.add(actionBtn);
             }
         }
+
+        if (editItemCallback != null) {
+            Button editBtn = new Button(new Icon(VaadinIcon.EDIT));
+            editBtn.addClickListener(event -> editItemCallback.onEdit(feedItem, position));
+            actions.add(editBtn);
+        }
+
+        add(actions);
+
         addClassName("item_card");
     }
 }
