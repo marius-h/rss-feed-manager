@@ -59,25 +59,25 @@ public class RSSFeedWriter {
         for (FeedItem entry : rssfeed.getItems()) {
             eventWriter.add(eventFactory.createStartElement("", "", Rss.ITEM));
             eventWriter.add(end);
-            if (entry.getTitle() != null &&!entry.getTitle().isEmpty()) {
+            if (entry.getTitle() != null && !entry.getTitle().isEmpty()) {
                 createNode(eventWriter, Rss.TITLE, entry.getTitle(), null);
             }
-            if (entry.getDescription() != null &&!entry.getDescription().isEmpty()) {
+            if (entry.getDescription() != null && !entry.getDescription().isEmpty()) {
                 createNode(eventWriter, Rss.DESCRIPTION, entry.getDescription(), null);
             }
-            if (entry.getLink() != null &&!entry.getLink().isEmpty()) {
+            if (entry.getLink() != null && !entry.getLink().isEmpty()) {
                 createNode(eventWriter, Rss.LINK, entry.getLink(), null);
             }
             if (entry.getAuthor() != null && !entry.getAuthor().isEmpty()) {
                 createNode(eventWriter, Rss.AUTHOR, entry.getAuthor(), null);
             }
-            if (entry.getPubDate() != null &&!entry.getPubDate().isEmpty()) {
+            if (entry.getPubDate() != null && !entry.getPubDate().isEmpty()) {
                 createNode(eventWriter, Rss.PUB_DATE, entry.getPubDate(), null);
             }
-            if (entry.getGuid() != null &&!entry.getGuid().isEmpty()) {
+            if (entry.getGuid() != null && !entry.getGuid().isEmpty()) {
                 createNode(eventWriter, Rss.GUID, entry.getGuid(), null);
             }
-            if (entry.getImage() != null &&!entry.getImage().isEmpty()) {
+            if (entry.getImage() != null && !entry.getImage().isEmpty()) {
                 createNode(eventWriter, Rss.IMAGE, "",
                         new ArrayList<>(Collections.singletonList(new Enclosure(entry.getImage()))).iterator());
             }
@@ -118,4 +118,3 @@ public class RSSFeedWriter {
         eventWriter.add(end);
     }
 }
-

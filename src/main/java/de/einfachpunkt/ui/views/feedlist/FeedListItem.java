@@ -45,7 +45,9 @@ public class FeedListItem extends VerticalLayout {
         H3 headline = new H3(feedItem.getTitle());
         textContainer.add(headline);
         try {
-            textContainer.add(new H5(feedItem.getTimeAgo()));
+            H5 time = new H5(feedItem.getTimeAgo());
+            time.addClassName("time_style");
+            textContainer.add(time);
         } catch (ParseException e) {
             e.printStackTrace();
         }

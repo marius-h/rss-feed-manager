@@ -27,7 +27,6 @@ import java.util.List;
 public class FeedList extends VerticalLayout {
 
     private final H2 header = new H2("Mein Feed");
-    //    private final Grid<FeedItem> grid = new Grid<>();
     private final List<Component> listItems = new ArrayList<>();
 
     private final FeedEditorDialog form = new FeedEditorDialog(
@@ -82,13 +81,13 @@ public class FeedList extends VerticalLayout {
     }
 
     private FeedChannel getRSSChannel() {
-        RSSFeedParser parser = new RSSFeedParser(new File("feed.xml"));
+        //RSSFeedParser parser = new RSSFeedParser(new File("feed.xml"));
+        RSSFeedParser parser = new RSSFeedParser("https://www.spiegel.de/international/germany/index.rss");
         return parser.readFeed();
     }
 
     private void saveCategory(FeedItem feedItem,
                               AbstractEditorDialog.Operation operation) {
-        //CategoryService.getInstance().saveCategory(feedItem);
 
         Notification.show(
                 "FeedItem successfully " + operation.getNameInText() + "ed.",
@@ -101,11 +100,8 @@ public class FeedList extends VerticalLayout {
                 .findReviews(feedItem.getTitle());
 
         reviewsInCategory.forEach(review -> {
-//            review.setNewsModel(
-//                    CategoryService.getInstance().getUndefinedCategory());
             ReviewService.getInstance().saveReview(review);
         });
-        //CategoryService.getInstance().deleteCategory(feedItem);
 
         Notification.show("FeedItem successfully deleted.", 3000,
                 Notification.Position.BOTTOM_START);

@@ -7,6 +7,7 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.page.Viewport;
+import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
@@ -34,14 +35,14 @@ public class MainLayout extends Div implements RouterLayout, PageConfigurator {
         RouterLink editFeed = new RouterLink(null, FeedEdit.class);
         editFeed.add(new Icon(VaadinIcon.EDIT), new Text("Feed editieren"));
         editFeed.addClassName("main-layout__nav-item");
-        //editFeed.setHighlightCondition(HighlightConditions.sameLocation());
+        editFeed.setHighlightCondition(HighlightConditions.sameLocation());
 
         RouterLink feed = new RouterLink(null, FeedList.class);
         feed.add(new Icon(VaadinIcon.NEWSPAPER), new Text("Mein Feed"));
         feed.addClassName("main-layout__nav-item");
+        feed.setHighlightCondition(HighlightConditions.sameLocation());
 
         Div navigation = new Div(feed, editFeed);
-//        Div navigation = new Div(feed);
         navigation.addClassName("main-layout__nav");
 
         Div header = new Div(title, navigation);
