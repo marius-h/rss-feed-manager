@@ -1,3 +1,14 @@
+# RSS-Feed-Manager
+
+<img src="https://i.imgur.com/4YzEsHj.png" height="400" alt="UI for viewing the feed"/>
+
+*Feed overview*<p>
+
+<img src="https://i.imgur.com/Dzh6lWa.png" height="400" alt="UI for administrating the feed"/>
+
+*Administrating the feed: Add, edit or delete items*<p>
+
+
 ## Prerequisites
 
 The project can be imported into the IDE of your choice, with Java 8 installed, as a Maven project.
